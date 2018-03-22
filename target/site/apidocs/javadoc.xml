@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<root>
+    <package name="com.example.onHeapDedup">
+        <class name="Application" qualified="com.example.onHeapDedup.Application" scope="public" abstract="false" error="false" exception="false" externalizable="false" included="true" serializable="false">
+            <class qualified="java.lang.Object"/>
+            <interface qualified="com.datatorrent.api.StreamingApplication"/>
+            <constructor name="Application" signature="()" qualified="com.example.onHeapDedup.Application" scope="public" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false"/>
+            <method name="populateDAG" signature="(com.datatorrent.api.DAG, org.apache.hadoop.conf.Configuration)" qualified="com.example.onHeapDedup.Application.populateDAG" scope="public" abstract="false" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false">
+                <parameter name="dag">
+                    <type qualified="com.datatorrent.api.DAG"/>
+                </parameter>
+                <parameter name="conf">
+                    <type qualified="org.apache.hadoop.conf.Configuration"/>
+                </parameter>
+                <return qualified="void"/>
+                <annotation name="Override" qualified="java.lang.Override"/>
+            </method>
+            <annotation name="ApplicationAnnotation" qualified="com.datatorrent.api.annotation.ApplicationAnnotation">
+                <argument name="name" primitive="false" array="false">
+                    <type qualified="java.lang.String"/>
+                    <value>OnHeapDedup</value>
+                </argument>
+            </annotation>
+        </class>
+        <class name="RandomNumberGenerator" qualified="com.example.onHeapDedup.RandomNumberGenerator" scope="public" abstract="false" error="false" exception="false" externalizable="false" included="true" serializable="false">
+            <comment>This is a simple operator that emits random number.</comment>
+            <class qualified="com.datatorrent.common.util.BaseOperator"/>
+            <interface qualified="com.datatorrent.api.InputOperator"/>
+            <constructor name="RandomNumberGenerator" signature="()" qualified="com.example.onHeapDedup.RandomNumberGenerator" scope="public" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false"/>
+            <method name="beginWindow" signature="(long)" qualified="com.example.onHeapDedup.RandomNumberGenerator.beginWindow" scope="public" abstract="false" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false">
+                <parameter name="windowId">
+                    <type qualified="long"/>
+                </parameter>
+                <return qualified="void"/>
+                <annotation name="Override" qualified="java.lang.Override"/>
+            </method>
+            <method name="emitTuples" signature="()" qualified="com.example.onHeapDedup.RandomNumberGenerator.emitTuples" scope="public" abstract="false" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false">
+                <return qualified="void"/>
+                <annotation name="Override" qualified="java.lang.Override"/>
+            </method>
+            <method name="getNumTuples" signature="()" qualified="com.example.onHeapDedup.RandomNumberGenerator.getNumTuples" scope="public" abstract="false" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false">
+                <return qualified="int"/>
+            </method>
+            <method name="setNumTuples" signature="(int)" qualified="com.example.onHeapDedup.RandomNumberGenerator.setNumTuples" scope="public" abstract="false" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false">
+                <comment>Sets the number of tuples to be emitted every window.</comment>
+                <tag name="@param" text="numTuples number of tuples"/>
+                <parameter name="numTuples">
+                    <type qualified="int"/>
+                </parameter>
+                <return qualified="void"/>
+            </method>
+            <field name="out" qualified="com.example.onHeapDedup.RandomNumberGenerator.out" scope="public" volatile="false" transient="true" static="false" final="true">
+                <type qualified="com.datatorrent.api.DefaultOutputPort">
+                    <generic qualified="java.lang.Integer"/>
+                </type>
+            </field>
+        </class>
+        <class name="OnHeapDeduper" qualified="com.example.onHeapDedup.OnHeapDeduper" scope="public" abstract="false" error="false" exception="false" externalizable="false" included="true" serializable="false">
+            <class qualified="com.datatorrent.common.util.BaseOperator"/>
+            <constructor name="OnHeapDeduper" signature="()" qualified="com.example.onHeapDedup.OnHeapDeduper" scope="public" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false"/>
+            <method name="dedup" signature="(java.lang.Integer)" qualified="com.example.onHeapDedup.OnHeapDeduper.dedup" scope="public" abstract="false" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false">
+                <parameter name="key">
+                    <type qualified="java.lang.Integer"/>
+                </parameter>
+                <return qualified="void"/>
+            </method>
+            <method name="setup" signature="(com.datatorrent.api.Context.OperatorContext)" qualified="com.example.onHeapDedup.OnHeapDeduper.setup" scope="public" abstract="false" final="false" included="true" native="false" synchronized="false" static="false" varArgs="false">
+                <parameter name="context">
+                    <type qualified="com.datatorrent.api.Context.OperatorContext"/>
+                </parameter>
+                <return qualified="void"/>
+                <annotation name="Override" qualified="java.lang.Override"/>
+            </method>
+            <field name="unique" qualified="com.example.onHeapDedup.OnHeapDeduper.unique" scope="public" volatile="false" transient="true" static="false" final="true">
+                <type qualified="com.datatorrent.api.DefaultOutputPort">
+                    <generic qualified="java.lang.Integer"/>
+                </type>
+            </field>
+            <field name="duplicate" qualified="com.example.onHeapDedup.OnHeapDeduper.duplicate" scope="public" volatile="false" transient="true" static="false" final="true">
+                <type qualified="com.datatorrent.api.DefaultOutputPort">
+                    <generic qualified="java.lang.Integer"/>
+                </type>
+            </field>
+            <field name="input" qualified="com.example.onHeapDedup.OnHeapDeduper.input" scope="public" volatile="false" transient="true" static="false" final="true">
+                <type qualified="com.datatorrent.api.DefaultInputPort">
+                    <generic qualified="java.lang.Integer"/>
+                </type>
+            </field>
+        </class>
+    </package>
+</root>
