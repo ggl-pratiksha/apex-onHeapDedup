@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 public class OnHeapDeduper extends BaseOperator {
 
+    private static final int MAX = 50000000;
+
     private static final Logger LOG = LoggerFactory.getLogger(OnHeapDeduper.class);
 
     public final transient DefaultOutputPort<Integer> unique = new DefaultOutputPort<Integer>();
@@ -29,8 +31,17 @@ public class OnHeapDeduper extends BaseOperator {
     public OnHeapDeduper() {}
 
     public void dedup(Integer key){
+
         if(onHeapSet.add(key)){
+            if(key == 1)
+                LOG.info("START 1 : " + System.currentTimeMillis());
+
             unique.emit(key);
+
+            if(key == MAX) {
+                LOG.info("DONE " + MAX + " : " + System.currentTimeMillis());
+                throw new ShutdownException();
+            }
         }
         else {
             duplicate.emit(key);

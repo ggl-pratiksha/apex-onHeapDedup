@@ -25,8 +25,12 @@
     <value>%s</value>
   </property>
   <property>
-    <name>dt.operator.*.attr.MEMORY_MB</name>
-    <value>128</value>
+    <name>dt.operator.SerialNumberGenerator.attr.MEMORY_MB</name>
+    <value>5120</value>
+  </property>
+  <property>
+    <name>dt.attr.CONTAINER_JVM_OPTIONS</name>
+    <value>-Xloggc:&lt;LOG_DIR&gt;/gc.log -verbose:gc -XX:+PrintGCDateStamps</value>
   </property>
 </configuration>
 
